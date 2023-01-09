@@ -55,6 +55,36 @@
   - JSON
   - Always go with Group, Roles, User
 
+#### Best practices while creating an AWS account root user
+- Use strong pasword
+- Never share password or access key with anyone.
+- Shoudn't encrypt the access keys and save them on Amazon S3  
+- Enable AWS multi-factor authentication on your root user
+
+#### IAM Policy example
+
+```
+{
+        "Action": [
+            "s3:DeleteObject"
+        ],
+        "Resource": [
+            "arn:aws:s3:::example-bucket/*"
+        ],
+        "Effect": "Allow"
+ }
+```
+
+#### Permission boundary
+- ![permission-boundary](icon/Secure/permission-boundary.png)
+
+Explain:
+
+- **Effect**: specifies whether the statment will Allow or Deny an action (Allow is the effect defined here)
+- **Action**: Describes a specific action or actions that will either be allowed or denied to run based on the Effect entered. API actions are unique to each service (DeleteObject is the action defined here)
+- **Resource**: Specifies the resources—for example, an S3 bucket or objects—that the policy applies to in Amazon Resource Name (ARN) format ( example-bucket/* is the resource defined here).
+
+
 #### AWS CLI
 
 - Command line interface that help access to AWS service.
@@ -80,6 +110,7 @@
   - Public and Private key pairs
   - En & De or Sign/Verify
   - Private key can be download, but private key need to keep carefully.
+  - Enforces deleting in a **waiting period**. The default is 30 days, but can be changed.
 
 #### KMS Automatic Key Rotation
 
@@ -148,6 +179,10 @@
 - Prevent account takeover fraud
 - Administer AWS WAF with APIs
 
+#### Examble
+- Block access from two countries and allow access only from the home country of the company.
+- Solutions: use AWF to allow or block requests based on the rules in a web access control list (web ACL). Geographic (Geo) Match Conditions in AWS WAF allows you to use AWS WAF to restrict application access based on the geographic location of your viewers. With geo match conditions you can choose the countries from AWS WAF should allow access.
+
 ### 6. AWS GuardDuty
 
 ![](icon/Secure/AWS-GuardDuty.png)
@@ -173,6 +208,12 @@
 - Identify files containing malware
 - Route insightful information on security findings
 
+#### Disable the service in the general settings 
+- Disabling the service will delete all remaining data, including your findings and configurations before relinquishing the service permissions and resetting the service. 
+
+#### Examble
+ - Monitor any malicous activity on S3
+
 
 ### 7. Amazon Inspector
 ![](icon/Secure/Amazon-Inspector.png)
@@ -195,6 +236,10 @@
 - Meet compliance requirements
 - Identify zero-day vulnerabilities sooner
 
+#### Examble
+
+- Use security assessments provided by Amazon Inspector to check for vulnerabilities on EC2 instances
+
 ### 8. AWS CloudTrail
 
 ![](icon/Secure/AWS-CloudTrail.png)
@@ -206,11 +251,22 @@
 - _Insights_ and analytics
 - Multi-region
 - Multi-account
+- Event save maxi
 
 #### Use cases
 - Audit activity
 - Identify security incidents
 - Troubleshoot operational issues
+
+#### CloudTrail Events
+- Management Events
+	- Excuted on resource of AWS account
+	- Read Event and Write Event 
+- Data Events
+	- Lambda function execution
+	- AWS S3 object-level activity 
+- CloudTrail Insights Events
+	- Detect unusual activity 
 
 ### 9. AWS CloudWatch
 ![](icon/Secure/Amazon-CloudWatch.png)
@@ -287,6 +343,12 @@
 	- StatusCheckFailed_System metric
 	- Recovery an EC2 without changing Private/Public IP, Elastic IP, metadata...
 
+- AWS CloudWatch Events
+	- Events: the changes of AWS resources
+	- Rules: define event and target
+	- Target: handle event place.
+
+
 ### 10. AWS Config
 
 
@@ -301,6 +363,142 @@
 - Continually audit security monitoring and analysis
 
 
+### AWS Route 53
+
+![](icon/Secure/AWS-Route-53.png)
+
+#### Components
+
+- Route 53 - Records
+	- Name of domain/sub-domain
+	- Record types (A, AAAA...)
+	- Value (e.g. 10.2.11.3)
+	- Routing policy
+	- TTL
+-  Record types
+	- **A**: Mapping hostname to IPv4
+	- **AAAA**: Mapping hostname to IPv6
+	- **CNAME**: Mapping hostname to anothers
+	- **NS**: Name Servers for **Hosted Zone** 
+- Hosted Zone 
+	- **Public hosted zones**: contain records that you want to route on the Internet
+	- **Private hosted zones**: contain records you want to route traffic inside **Amazon VPC**.
+- Routing Policy 
+	- Simple
+		- **CANNOT** use Health Checks 	
+	- Weighted 
+		- Load Balancing between regions
+	- Latency 
+	- Failover
+	![](icon/Secure/Failover.png)
+	
+	- Geolocation 
+	- Geoproximmity 
+		- Define bias
+		 	- Increase bias: 1~99 : increase traffic to resource
+		 	- Decrease bias: -1~-99 : decrease traffic to resource
+	 	- Resouces can be AWS resources or Non-AWS resources
+ 		- Require** Traffic Flow**
+	- Multi Value
+		- Incompatible with ELB
+
+- Health Checks
+	- Can detect CloudWatch Alarms
+	- Healthy/Unhealthy Threshold (Default:3)
+	- Interval: 30s
+	- Support: HTTP, HTTPS, TCP
+	- If > **18**%: **Healthy**; else **Unhealthy**    
+
+
+	
+
+#### Use cases
+- Manage network traffic globally
+- Build highly availble applications
+- Set up private DNS
+
+
+### Cloudfront
+
+![](icon/Secure/AWS-CloudFront.png)
+
+#### Features
+- Enhance performance of read data by caching at Egde location
+- There are 216 Egde location on the world
+- AWS Shield, AWS AWF, Amazon Route 53, and AWS CloudFront work seamlessly together to create a flexible, layered security perimeter against multiple types of attacks including network and DDoS.
+- Doesn't belong to a VPC
+
+
+#### Use cases
+- Deliver fast, secure websites
+- Accelerate dynamic content delivery and APIs
+- Stream live and on-demand video
+- Distribute patches and updates
+
+#### Components
+- Cloudfront Origins
+	- S3 bucket:
+		- Cache file at Edge location
+		- Origin Access Identity (OAI)
+		- Ingress for S3 uploading
+	- Custom origin (HTTP)
+		- Application Load Balancer
+		- EC2 instance
+		- S3 website
+- Cloudfront - Geo restriction
+	- Whitelist: list of nationality/region which can be accessed
+	- Backlist: list of denied nationality/region 
+- Cloudfront Signed URL/Signed Cookies
+	- Signed URL: particular file (signed url/1 file)
+	- Signed Cookies: multiple access files (1 signed cookies/many file)
+
+#### Shoud skip content types
+- Proxy methods PUT/POST/PATCH/OPTIONS/DELETE go directly to the origin
+- Dynamic content, as determined at request time (cache-behavior configured to forward all headers)	
+
+### AWS S3
+
+- Encryption
+	- Server-side encryption: S3 side
+		- SSE - S3: 
+			![](icon/Secure/SSE-S3.png)	
+			- Managed by AWS
+			- Object encrypted by sever-side
+			- Method: AES-256
+			- Set header: "x-amz-server-side-encryption":"AES256"
+		
+		- SSE - KMS: Use KMS manage encryption keys
+			![](icon/Secure/SSE-KMS.png)	
+			- Key provided by KMS
+			- Object encrypted by sever-side
+			- Set header: "x-amz-server-side-encryption":"aws:kms"
+		- SSE - C: 
+			![](icon/Secure/SSE-C.png)		
+			- Encryption by server-side using keys which provided by client
+			- Require: HTTPS
+			- Provide in HTTPs header of each request.
+
+			
+	-  Client-side encryption: client side encrypt and upload data on S3
+		![](icon/Secure/Client Side E.png)
+		- Encrypted before upload on S3
+		- Use Amazon S3 Encryption Client
+	
+		
+	-  Transit - SSL TLS
+		 
+- When you apply a retention period to an object version explicitly, you specify a Retain Until Date for the object version - You can place a retention period on an object version either explicitly or through a bucket default setting. When you apply a retention period to an object version explicitly, you specify a Retain Until Date for the object version. Amazon S3 stores the Retain Until Date setting in the object version's metadata and protects the object version until the retention period expires.
+
+- Different versions of a single object can have different retention modes and periods 
+	- Like all other Object Lock settings, retention periods apply to individual object versions. Different versions of a single object can have different retention modes and periods.
+
+	For example, suppose that you have an object that is 15 days into a 30-day retention period, and you PUT an object into Amazon S3 with the same name and a 60-day retention period. In this case, your PUT succeeds, and Amazon S3 creates a new version of the object with a 60-day retention 	period. The older version maintains its original retention period and becomes deletable in 15 days.
+   
+
 ## Authors
 
 - [daiking](https://github.com/mrdaiking)
+
+## Refs
+
+- https://dev.to/aws-builders/encrypt-your-s3-object-1al

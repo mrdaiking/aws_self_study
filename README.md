@@ -75,8 +75,7 @@
  }
 ```
 
-#### Permission boundary
-- ![permission-boundary](icon/Secure/permission-boundary.png)
+
 
 Explain:
 
@@ -84,6 +83,8 @@ Explain:
 - **Action**: Describes a specific action or actions that will either be allowed or denied to run based on the Effect entered. API actions are unique to each service (DeleteObject is the action defined here)
 - **Resource**: Specifies the resources—for example, an S3 bucket or objects—that the policy applies to in Amazon Resource Name (ARN) format ( example-bucket/* is the resource defined here).
 
+#### Permission boundary
+![permission-boundary](icon/Secure/permission-boundary.png)
 
 #### AWS CLI
 
@@ -348,22 +349,87 @@ Explain:
 	- Rules: define event and target
 	- Target: handle event place.
 
+### 10. Amazon Cognito
 
-### 10. AWS Config
-
-
-![](icon/Secure/Amazon-CloudWatch.png)
+![](icon/Secure/Amazon-Cognito.png)
 
 
+#### Features
+
+- Identity Management
+	- Self registration
+	- Identity store (Amazon Cognito user pools)
+	- Migration options
+- User Authentication
+	- Flexible Authentication
+	- Federation
+- Access Control
+	- Last mile integration with apaplications
+	- Access AWS resources
+	- Machine-to-machine authentication
+- Customer Experience
+	- Customer outreach
+	- Business agility amplified 
+	- Extensibility
+- Security
+	- Bot detection
+	- Compliance	     	 
 
 #### Use cases
 
-- Streamline operational troubleshooting and change management
-- Deploy a compliance-as-code framework
-- Continually audit security monitoring and analysis
+- Engage customers with flexible authentication
+- Manage B2B identities
+- Secure machine-to-machine authentication
+- Get role-based access to AWS resources
 
 
-### AWS Route 53
+
+
+
+### 11. AWS Config
+
+![](icon/Secure/AWS-Config.png)
+
+#### Features
+
+- Configuration history of AWS resources
+- Configuration history of software
+- Resource relationships tracking
+- Configurable and customizable rules
+- Conformance packs
+- Multi-account, multi-Region data aggregation
+- **Extensibility**
+- Configuration snapshots
+- Cloud governance dashboard
+- Partner solutions
+- Integrations
+	- AWS Organizations
+	- AWS CloudTrail
+	- Connect with ITSM / ITOM Software
+	- AWS Security Hub
+	- AWS Audit Manager
+	- AWS System Manager
+	- AWS Firewall Manager
+	- Amazon EC2 Dedicated Host
+	- Application Load Balancers
+	
+### 12. AWS Security Hub
+
+![](icon/Secure/AWS-Security-Hub.png)
+
+### Features
+- Automated, continous security best practice checks
+- Consolidated findings across
+
+### Use cases
+- Conduct Cloud Security Posture Management (CSPM)
+- Initiate Security Orchestration Automation, and Response (SOAR) workflows
+- Save time and money by simplifying integrations
+- Correlate your security finding to discover new insights
+
+
+
+### 13. AWS Route 53
 
 ![](icon/Secure/AWS-Route-53.png)
 
@@ -398,7 +464,7 @@ Explain:
 		 	- Increase bias: 1~99 : increase traffic to resource
 		 	- Decrease bias: -1~-99 : decrease traffic to resource
 	 	- Resouces can be AWS resources or Non-AWS resources
- 		- Require** Traffic Flow**
+ 		- Require **Traffic Flow**
 	- Multi Value
 		- Incompatible with ELB
 
@@ -410,7 +476,6 @@ Explain:
 	- If > **18**%: **Healthy**; else **Unhealthy**    
 
 
-	
 
 #### Use cases
 - Manage network traffic globally
@@ -418,14 +483,14 @@ Explain:
 - Set up private DNS
 
 
-### Cloudfront
+### 14. AWS Cloudfront
 
 ![](icon/Secure/AWS-CloudFront.png)
 
 #### Features
 - Enhance performance of read data by caching at Egde location
 - There are 216 Egde location on the world
-- AWS Shield, AWS AWF, Amazon Route 53, and AWS CloudFront work seamlessly together to create a flexible, layered security perimeter against multiple types of attacks including network and DDoS.
+- **AWS Shield**, **AWS AWF**, **Amazon Route 53**, and** AWS CloudFront** work seamlessly together to create a flexible, layered security perimeter against multiple types of attacks including network and DDoS.
 - Doesn't belong to a VPC
 
 
@@ -456,7 +521,7 @@ Explain:
 - Proxy methods PUT/POST/PATCH/OPTIONS/DELETE go directly to the origin
 - Dynamic content, as determined at request time (cache-behavior configured to forward all headers)	
 
-### AWS S3
+### 15. AWS S3
 
 - Encryption
 	- Server-side encryption: S3 side

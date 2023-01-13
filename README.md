@@ -86,6 +86,10 @@ Explain:
 #### Permission boundary
 ![permission-boundary](icon/Secure/permission-boundary.png)
 
+- For each developer, define an IAM permission boundary that will restrict the managed policies they can attach to themselves
+
+#### Be able to create IAM role for the Lambda function that grants access to the S3 bucket.
+
 #### AWS CLI
 
 - Command line interface that help access to AWS service.
@@ -482,6 +486,12 @@ Explain:
 - Build highly availble applications
 - Set up private DNS
 
+#### Enable DNS hostnames and DNS resolution for private hosted zones
+- DNS hostnames and DNS resolution are required setting for private hosted zones. DNS queries for private hosted zones can be resolved by the Amazon-provided VPC DNS server only. As a result, these options must be enabled for your private hosted zone to work
+- **DNS hostnames**: For non-default virtual private clouds that aren't created using the Amazon VPC wizard, this option is disabled by default. If you create a private hosted zone for a domain and create records in the zone without enabling DNS hostnames, private hosted zones aren't enabled. To use a private hosted zone, this option must be enabled.
+- DNS resolution: Private hosted zones accept DNS queries only from a VPC DNS server. The IP address of the VPC DNS server is the reserved IP address at the base of the VPC IPv4 network range plus two. Enabling DNS performing DNS resolution. Keep this option disabled if you're using a custom DNS server in the DHCP Options set, and you're not using a private hosted zone.
+
+
 
 ### 14. AWS Cloudfront
 
@@ -558,9 +568,91 @@ Explain:
 	- Like all other Object Lock settings, retention periods apply to individual object versions. Different versions of a single object can have different retention modes and periods.
 
 	For example, suppose that you have an object that is 15 days into a 30-day retention period, and you PUT an object into Amazon S3 with the same name and a 60-day retention period. In this case, your PUT succeeds, and Amazon S3 creates a new version of the object with a 60-day retention 	period. The older version maintains its original retention period and becomes deletable in 15 days.
+	
+	
+	
+### AWS Transit Gateway
    
+![](icon/Secure/AWS-Transit-Gateway.png)
+
+
+#### Features
+
+- Routing
+- Edge connectivity
+- Transit Gateway Connect
+- Amazon VPC feature interoperability
+- Monitoring
+- Management
+- Peering
+- Multicast
+- Security
+- Automated provisioning
+- Single management portal across cloud and on-premises networks
+- Events
+- Metrics
+- SD-WAN Network Manager compatibility
+
+
+#### Use cases
+
+- Deliver applications around the world
+- Rapidly move to global scale
+- Smoothly repsond to spikes in demand
+- Host multicast application on AWS	
+
+
+**Without Transit Gateway**
+![](icon/Secure/without-transit-gateway.png)
+**With Transit Gateway**
+![](icon/Secure/with-transit-gateway.png)
+
+
+### AWS Certificate Manager
+
+AWS Certificate Manager is a service that lets you easily provision, manage, and deploy public and private Secure Sockets Layer/Transport Layer Security (SSL/TLS) certificates for use with AWS services and your internal connected resources. SSL/TLS certificates are used to secure network communications and establish the identity of websites over the Internet as well as resources on private networks.
+
+![](icon/Secure/AWS-Certificate Manager.png)
+
+#### Features
+- Centrally manage certificates
+- Secure key management
+- AWS service integration
+- Import third-party certificates
+
+#### Use cases
+- Protect and secure your website
+- Protect your internal resources
+- Improve uptime
+
+
+### AWS Secrets Manager
+Helps you protect secrets needed to access your applications, services, and IT resources. The service enables you to easily rotate, manage, and retrieve database credentials, API keys, and other secrets throughout their lifecycle. Users and applications retrieve secrets with a call to Secrets Manager APIs, eliminating the need to hardcode sensitive information in plain text. Secrets Manager offers secret rotation with built-in integration for Amazon RDS, Amazon Redshift, and Amazon DocumentDB. The correct answer here is Secrets Manager
+
+### Amazon Cognito User Pools
+
+![](icon/Secure/Cognito User Pools.jpeg)
+
+A user pool is a user directory in Amazon Cognito. You can leverage Amazon Cognito User Pools to either provide built-in user management or integrate with external identity providers, such as Facebook, Twitter, Google+, and Amazon. Whether your users sign-in directly or through a third party, all members of the user pool have a directory profile that you can access through a Software Development Kit (SDK).
+
+User pools provide: 
+
+1. Sign-up and sign-in services. 
+2. A built-in, customizable web UI to sign in users. 
+3. Social sign-in with Facebook, Google, Login with Amazon, and Sign in with Apple, as well as sign-in with SAML identity providers from your user pool. 
+4. User directory management and user profiles. 
+5. Security features such as multi-factor authentication (MFA), checks for compromised credentials, account takeover protection, and phone and email verification. 
+6. Customized workflows and user migration through AWS Lambda triggers.
+
+You can use Cognito User Pools to authenticate users through well-known social IdPs, such as Amazon, Facebook, or Google, through the user pools supported by Amazon Cognito or through corporate identities, using SAML, LDAP, or Microsoft AD, through the user pools supported by Amazon Cognito. You configure user authentication by creating an authenticate action for one or more listener rules.
+##Others
+
+- PostgreSQL port = 5432 HTTP port = 80 HTTPS port = 443
+
+
 
 ## Authors
+
 
 - [daiking](https://github.com/mrdaiking)
 
